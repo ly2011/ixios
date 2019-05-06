@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "lib": [
+      "es2015",
+      "esnext"
+    ],
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["src/*"],
+      "components/*": ["src/components"],
+      "config/*": ["src/config"],
+      "models/*": ["src/models"],
+      "utils/*": ["src/utils"],
+      "hooks/*": ["src/hooks"],
+      "assets/*": ["src/assets"]
+    }
+  }
+}

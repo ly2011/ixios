@@ -1,0 +1,11 @@
+{
+  "name": "ixios",
+  "version": "1.0.0",
+  "main": "index.js",
+  "description": "Reactive wrapper for axios",
+  "license": "MIT",
+  "peerDependencies": {
+    "axios": "^0.18.0",
+    "qs": "^6.7.0"
+  }
+}
