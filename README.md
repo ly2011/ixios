@@ -13,3 +13,5 @@
 2. [基于vue-cli3.0构建功能完善的前端架子](https://caibowen.net/article/a8jf63ml8s9p)
 
 3. [怎样防止重复发送 Ajax 请求？](https://www.zhihu.com/question/19805411)
+
+4. [axios基于常见业务场景的二次封装](https://segmentfault.com/a/1190000016474460)

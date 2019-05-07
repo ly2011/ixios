@@ -1,17 +1,22 @@
 import axios from 'axios'
-import qs from 'qs'
+import Qs from 'qs'
 
 const Axios = axios.create({
   // baseURL: '/',
   timeout: 0, // 永不超时
   withCredentials: true,
   headers: {
-    'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
+    'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
+    Pragma: 'no-cache',
+    'Cache-Control': 'no-cache, no-store'
   }
 })
 
 const { CancelToken } = axios
-const requestMap = new Map()
+// 请求列表
+export const requestMap = new Map()
+// 3.导出cancel token列表供全局路由守卫使用
+export const sources = {}
 
 // 请求前置拦截器
 Axios.interceptors.request.use(
@@ -21,24 +26,29 @@ Axios.interceptors.request.use(
     config.data = config.data || {}
 
     // 防止重复提交(即当前正在进行的相同请求)
-    const keyString = qs.stringify(
+    const keyString = Qs.stringify(
       Object.assign({}, { url: config.url, method: config.method }, config.data, config.params)
     )
+    config.cancelToken = new CancelToken(cancel => {
+      sources[keyString] = cancel
+    })
 
+    // 请求缓存中还存在该请求，则取消当前请求
     if (requestMap.get(keyString)) {
-      // 请求缓存中还存在该请求，则取消当前请求
       // 取消当前请求
-      config.cancelToken = new CancelToken(cancel => {
-        cancel('Please slow down a little')
-      })
+      sources[keyString]('取消重复请求')
+    } else {
+      requestMap.set(keyString, true)
     }
 
-    requestMap.set(keyString, true)
     Object.assign(config, { _keyString: keyString })
 
-    if (config.method === 'post' || config.method === 'put' || config.method === 'delete') {
+    const { method, useQs } = config
+
+    if (!useQs && useQs !== undefined) {
+    } else if (['post', 'put', 'delete'].includes(method)) {
       // 序列化数据
-      config.data = qs.stringify(config.data)
+      config.data = Qs.stringify(config.data, { allowDots: true })
     }
 
     return config
@@ -56,13 +66,13 @@ Axios.interceptors.response.use(
     // 把已经完成的请求从 requestMap 中移除
     requestMap.set(config._keyString, false)
 
-    // if (res.status === 200) {
-    //   return res.data
-    // }
-
     return res
   },
   error => {
+    // console.info('请求错误: ', error)
+    if (axios.isCancel(error)) {
+      // throw new axios.Cancel('取消当前请求')
+    }
     return Promise.reject(error)
   }
 )

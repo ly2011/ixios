@@ -22,6 +22,8 @@ module.exports = {
     'import/no-unresolved': 'off',
     'no-plusplus': 'off',
     'no-console': 'off',
+    'no-await-in-loop': 'off',
+    'no-new': 'off',
     'max-len': 'off',
     'no-underscore-dangle': 'off'
   }

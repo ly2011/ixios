@@ -4,7 +4,11 @@
   "main": "dist/ixios.cjs.js",
   "module": "dist/ixios.esm.js",
   "unpkg": "dist/ixios.min.js",
-  "keywords": [ "axios", "ajax", "rollup" ],
+  "keywords": [
+    "axios",
+    "ajax",
+    "rollup"
+  ],
   "description": "Reactive wrapper for axios",
   "author": "ly2011",
   "license": "MIT",
@@ -29,6 +33,7 @@
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.5",
     "cross-env": "^5.2.0",
+    "css-loader": "^2.1.1",
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-config-prettier": "^4.2.0",
@@ -36,6 +41,7 @@
     "eslint-loader": "^2.1.2",
     "eslint-plugin-import": "^2.17.2",
     "html-webpack-plugin": "^3.2.0",
+    "ittool": "^0.1.6",
     "prettier": "^1.17.0",
     "rimraf": "^2.6.3",
     "rollup": "^1.11.3",
@@ -50,11 +56,14 @@
     "rollup-plugin-terser": "^4.0.4",
     "serve": "^11.0.0",
     "standard-version": "^6.0.1",
+    "vue": "^2.6.10",
+    "vue-loader": "^15.7.0",
+    "vue-router": "^3.0.6",
+    "vue-style-loader": "^4.1.2",
+    "vue-template-compiler": "^2.6.10",
     "webpack": "^4.30.0",
     "webpack-cli": "^3.3.2",
     "webpack-dev-server": "^3.3.1"
   },
-  "dependencies": {
-    "axios": "^0.18.0"
-  }
+  "dependencies": {}
 }

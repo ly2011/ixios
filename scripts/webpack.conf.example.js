@@ -1,5 +1,6 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ESLintFormatter = require('eslint-friendly-formatter')
+const { VueLoaderPlugin } = require('vue-loader')
 const webpack = require('webpack')
 const path = require('path')
 const os = require('os')
@@ -52,10 +53,15 @@ const webpackConfig = {
     modules: [srcDir, 'node_modules'], // 指定以下目录寻找第三方模块，避免webpack往父级目录递归搜索
     // mainFields: ['main'], // 只采用main字段作为入口文件描述字段，减少搜索步骤
     alias: {
+      vue: 'vue/dist/vue.esm.js'
       // '@': srcDir // 缓存src目录为@符号，避免重复寻址
     }
   },
   // resolveLoader: {},
+  externals: {
+    axios: 'axios',
+    qs: 'Qs'
+  },
   module: {
     // noParse: /jquery|lodash/, // 忽略未采用模块化的文件，因此jquery或lodash将不会被下面的loaders解析
     rules: [
@@ -72,10 +78,21 @@ const webpackConfig = {
         ],
         // exclude: /node_modules/,
         use: ['babel-loader']
+      },
+      {
+        test: /\.vue$/,
+        include: srcDir,
+        exclude: /node_modules/,
+        use: 'vue-loader'
+      },
+      {
+        test: /\.css$/,
+        use: ['vue-style-loader', 'css-loader']
       }
     ]
   },
   plugins: [
+    new VueLoaderPlugin(),
     new HtmlWebpackPlugin({
       // Required
       inject: true, // 是否将js放在body的末尾
